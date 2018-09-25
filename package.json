@@ -1,0 +1,26 @@
+{
+  "name": "matropa",
+  "version": "1.0.0",
+  "description": "A matroska parser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trumanpurnell/matropa.git"
+  },
+  "keywords": [
+    "matroska",
+    "parser",
+    "h264",
+    "videos",
+    "audio"
+  ],
+  "author": "Truman Purnell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trumanpurnell/matropa/issues"
+  },
+  "homepage": "https://github.com/trumanpurnell/matropa#readme"
+}
