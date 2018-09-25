@@ -13,22 +13,23 @@ class MatroskaReader {
     constructor() {
         this.elements = []
     }
-
+    
     read(id = null) {
-        while (id = byteReader.read()) {
+        while (id = byteReader.read())
             this.elements.push(new EBMLement(id))
-            break
-        }
     }
 }
 
 class EBMLement {
     constructor(start) {
-        this.id = this.readVint(start)
-        this.size = this.readVint()
+        this.id = this.read(start)
+        this.size = this.read()
+
+        const dataReader = MatroskaReader.isMasterElement(this)
+        this.data = dataReader.read()
     }
 
-    readVint(start) {
+    read(start) {
         let field = start ? start.toString(2) : byteReader.read().toString(2)
         let bytesLeft = 8 - field.length
 
