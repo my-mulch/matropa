@@ -32,7 +32,12 @@ class EBMLement {
     }
 
     read(start) {
-        let field = start ? start.toString(2) : byteReader.read().toString(2)
+        let rawByte = byteReader.read()
+        
+        if (!rawByte)
+            return
+
+        let field = start ? start.toString(2) : rawByte.toString(2)
         let bytesLeft = 8 - field.length
 
         field = field.padStart(8, '0')
@@ -48,8 +53,9 @@ const matfile = utils
     .match(/.{1,8}/g)
     .map(function (byte) { return Number.parseInt(byte, 2) })
 
-console.log(matfile)
 
-// const byteReader = new ByteReader({ data: matfile })
-// const matReader = new MatroskaReader()
-// matReader.read()
+const byteReader = new ByteReader({ data: matfile })
+const matReader = new MatroskaReader()
+matReader.read()
+
+console.log(matReader)
