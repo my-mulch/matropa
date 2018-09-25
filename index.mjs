@@ -1,8 +1,10 @@
 
-function parse(matroska){
+class ByteReader {
+    constructor(props) {
+        this.data = props.data
+        this.skip = props.skip
+        this.head = props.head
+    }
 
-}
-
-function slurp(bytes, file){
-    
+    read() { return this.data[this.head++] }
 }
