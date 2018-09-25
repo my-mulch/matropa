@@ -1,5 +1,5 @@
 
-class ByteReader {
+export default class ByteReader {
     constructor(props) {
         this.data = props.data
         this.skip = props.skip
