@@ -9,4 +9,12 @@ export default class ConversionUtils {
         }, '')
     }
 
+    static convertBinStringToHexString(binString) {
+        return binString
+            .match(/.{1,4}/g)
+            .reduce(function (hexString, byte) {
+                return hexString + Number.parseInt(byte, 2).toString(16)
+            }, '')
+    }
+
 }

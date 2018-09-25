@@ -32,12 +32,12 @@ class EBMLement {
     }
 
     read(start) {
-        let rawByte = byteReader.read()
-        
+        const rawByte = start || byteReader.read()
+
         if (!rawByte)
             return
 
-        let field = start ? start.toString(2) : rawByte.toString(2)
+        let field = rawByte.toString(2)
         let bytesLeft = 8 - field.length
 
         field = field.padStart(8, '0')
@@ -58,4 +58,10 @@ const byteReader = new ByteReader({ data: matfile })
 const matReader = new MatroskaReader()
 matReader.read()
 
-console.log(matReader)
+matReader.elements.forEach(function (element) {
+    console.log('--------ELEMENT--------')
+    console.log('id', utils.convertBinStringToHexString(element.id))
+    console.log('size', utils.convertBinStringToHexString(element.size))
+    console.log('data', utils.convertBinStringToHexString(element.data))
+    console.log('\n\n')
+})
