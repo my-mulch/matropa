@@ -1,4 +1,5 @@
-export default new Set([
+
+[
     "1A45DFA3",
     "4286",
     "42F7",
@@ -249,4 +250,6 @@ export default new Set([
     "4484",
     "4487",
     "4485",
-])
+]
+
+export default new Set()
