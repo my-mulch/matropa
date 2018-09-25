@@ -16,5 +16,5 @@ export default class ConversionUtils {
                 return hexString + Number.parseInt(byte, 2).toString(16)
             }, '')
     }
-
+    
 }

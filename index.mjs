@@ -15,7 +15,7 @@ class MatroskaReader {
     constructor() { this.elements = [] }
 
     static getReaderForElement(EBMLement) {
-        return EBMLement.id in matroskaIds ? this : EBMLement
+        return matroskaIds.has(EBMLement.id) ? matReader : EBMLement
     }
 
     read(id = null) {
@@ -28,7 +28,7 @@ class EBMLement {
     constructor(start) {
         this.id = this.read(start)
         this.size = this.read()
-        this.data = MatroskaReader.getReaderForElement(this).read()
+        // this.data = MatroskaReader.getReaderForElement(this).read()
     }
 
     read(start) {
@@ -63,5 +63,7 @@ matReader.elements.forEach(function (element) {
     console.log('id', utils.convertBinStringToHexString(element.id))
     console.log('size', utils.convertBinStringToHexString(element.size))
     console.log('data', utils.convertBinStringToHexString(element.data))
+    console.log('master', matroskaIds.has(element.id))
     console.log('\n\n')
-})
+}, this)
+
