@@ -1,7 +1,7 @@
-import matroskaIds from './matroska-ids'
 import utils from './utils'
+import MatroskaReader from './matroska/reader'
 
-export default class ByteReader {
+class ByteReader {
     constructor(props) {
         this.data = props.data
         this.skip = props.skip || 1
@@ -9,16 +9,19 @@ export default class ByteReader {
     }
 
     read() { return this.data[this.head++] }
+    isEmpty() { return this.head == this.data.length }
 }
 
 class EBMLement {
-    constructor(id) {
+    constructor() {
         this.id = this.vRead()
         this.size = this.vRead()
-        this.data = this.dRead(this.valueOfVintStr(this.size))
-
-        this.toString()
+        this.data = MatroskaReader.isMasterElement(this.id)
+            ? this.mRead(this.valueOfVintStr(this.size))
+            : this.dRead(this.valueOfVintStr(this.size))
     }
+
+    byteCount() { return (this.id.length + this.size.length + this.data.length) / 8 }
 
     valueOfVintStr(vIntStr) {
         return Number.parseInt(vIntStr.slice(vIntStr.length / 8), 2)
@@ -38,29 +41,29 @@ class EBMLement {
     dRead(bytesLeft) {
         let field = ''
 
-        while (bytesLeft--) 
+        while (bytesLeft--)
             field += byteReader.read().toString(2).padStart(8, '0')
-            
-        
 
         return field
     }
 
-    toString() {
-        console.log('--------ELEMENT--------')
-        console.log('id', utils.convertBinStringToHexString(this.id))
-        console.log('size', utils.convertBinStringToHexString(this.size))
-        console.log('data', utils.convertBinStringToHexString(this.data))
-        console.log('master', matroskaIds.has(this.id))
-        console.log('\n\n')
+    mRead(bytesLeft, elements = []) {
+        while (bytesLeft) {
+            const element = new EBMLement()
+            elements.push(element)
+            bytesLeft -= element.byteCount()
+        }
+
+        return elements
     }
+
 }
 
 const matfile = utils
-    .convertHexStringToBinString('1a45dfa3a34286810142f7810142f2810442f381084282886d6174726f736b6142878104428581021853806701ffffff')
+    .convertHexStringToBinString('1a45dfa3a34286810142f7810142f2810442f381084282886d6174726f736b614287810442858102')
     .match(/.{1,8}/g)
     .map(function (byte) { return Number.parseInt(byte, 2) })
 
 const byteReader = new ByteReader({ data: matfile })
-new EBMLement()
+console.log(new EBMLement())
 

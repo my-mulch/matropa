@@ -1,7 +1,12 @@
-import utils from './utils'
+import utils from '../utils'
 
-export default new Set([
-    '1A45DFA3',
+export default {
+    master: new Set([
+        '1A45DFA3',
+    ].map(utils.convertHexStringToBinString))
+}
+
+const rest = new Set([
     '4286',
     '42F7',
     '42F2',
@@ -251,5 +256,4 @@ export default new Set([
     '4484',
     '4487',
     '4485',
-].map(utils.convertHexStringToBinString))
-
+])
