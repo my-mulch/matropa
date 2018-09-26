@@ -1,4 +1,27 @@
-import MatroskaId from './id.mjs';
+class MatroskaId {
+    constructor(props) {
+        this.name = props.name
+        this.level = props.level
+        this.type = props.type
+        this.webm = props.webm
+
+        this.mandatory = props.mandatory
+        this.multiple = props.multiple
+        this.range = props.range
+        this.default = props.default
+
+        this.id = props.id
+
+        this.v1 = props.v1
+        this.v2 = props.v2
+        this.v3 = props.v3
+        this.v4 = props.v4
+
+        this.description = props.description
+    }
+
+    isMaster() { return this.type === 'm' }
+}
 
 export default {                              
     '00011010010001011101111110100011': new MatroskaId({ name: 'EBML                       ', level: "0 ", id: '00011010010001011101111110100011', mandatory: "mand.", multiple: "mult.", range: "-         ", default: "-                             ", type: "m", webm: "*", v1: "*", v2: "*", v3: "*", v4: "*", description: "Set the EBML characteristics of the data to follow. Each EBML document has to start with this.", }),
