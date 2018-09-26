@@ -15,6 +15,7 @@ class ByteReader {
 class EBMLement {
     constructor() {
         this.id = this.vRead()
+        this.name = MatroskaReader.lookupName(this.id)
         this.size = this.vRead()
         this.data = MatroskaReader.isMasterElement(this.id)
             ? this.mRead(this.valueOfVintStr(this.size))
