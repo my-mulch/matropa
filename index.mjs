@@ -11,33 +11,21 @@ export default class ByteReader {
     read() { return this.data[this.head++] }
 }
 
-class MatroskaReader {
-    constructor() { this.elements = [] }
-
-    static getReaderForElement(EBMLement) {
-        return matroskaIds.has(EBMLement.id) ? matReader : EBMLement
-    }
-
-    read(id = null) {
-        while (id = byteReader.read())
-            this.elements.push(new EBMLement(id))
-    }
-}
-
 class EBMLement {
-    constructor(start) {
-        this.id = this.read(start)
-        this.size = this.read()
-        // this.data = MatroskaReader.getReaderForElement(this).read()
+    constructor(id) {
+        this.id = this.vRead()
+        this.size = this.vRead()
+        this.data = this.dRead(this.valueOfVintStr(this.size))
+
+        this.toString()
     }
 
-    read(start) {
-        const rawByte = start || byteReader.read()
+    valueOfVintStr(vIntStr) {
+        return Number.parseInt(vIntStr.slice(vIntStr.length / 8), 2)
+    }
 
-        if (!rawByte)
-            return
-
-        let field = rawByte.toString(2)
+    vRead() {
+        let field = byteReader.read().toString(2)
         let bytesLeft = 8 - field.length
 
         field = field.padStart(8, '0')
@@ -46,6 +34,26 @@ class EBMLement {
 
         return field
     }
+
+    dRead(bytesLeft) {
+        let field = ''
+
+        while (bytesLeft--) 
+            field += byteReader.read().toString(2).padStart(8, '0')
+            
+        
+
+        return field
+    }
+
+    toString() {
+        console.log('--------ELEMENT--------')
+        console.log('id', utils.convertBinStringToHexString(this.id))
+        console.log('size', utils.convertBinStringToHexString(this.size))
+        console.log('data', utils.convertBinStringToHexString(this.data))
+        console.log('master', matroskaIds.has(this.id))
+        console.log('\n\n')
+    }
 }
 
 const matfile = utils
@@ -53,17 +61,6 @@ const matfile = utils
     .match(/.{1,8}/g)
     .map(function (byte) { return Number.parseInt(byte, 2) })
 
-
 const byteReader = new ByteReader({ data: matfile })
-const matReader = new MatroskaReader()
-matReader.read()
-
-matReader.elements.forEach(function (element) {
-    console.log('--------ELEMENT--------')
-    console.log('id', utils.convertBinStringToHexString(element.id))
-    console.log('size', utils.convertBinStringToHexString(element.size))
-    console.log('data', utils.convertBinStringToHexString(element.data))
-    console.log('master', matroskaIds.has(element.id))
-    console.log('\n\n')
-}, this)
+new EBMLement()
 
