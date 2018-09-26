@@ -1,3 +1,10 @@
+
+export default class MatroskaSpecs {
+    // to maintain this pretty table
+    static getId(key) { return ids[key.padEnd(32, ' ')] }
+}
+
+
 class MatroskaId {
     constructor(props) {
         this.name = props.name
@@ -23,7 +30,7 @@ class MatroskaId {
     isMaster() { return this.type === 'm' }
 }
 
-export default {                              
+const ids = {
     '00011010010001011101111110100011': new MatroskaId({ name: 'EBML                       ', level: "0 ", id: '00011010010001011101111110100011', mandatory: "mand.", multiple: "mult.", range: "-         ", default: "-                             ", type: "m", webm: "*", v1: "*", v2: "*", v3: "*", v4: "*", description: "Set the EBML characteristics of the data to follow. Each EBML document has to start with this.", }),
     '0100001010000110                ': new MatroskaId({ name: 'EBMLVersion                ', level: "1 ", id: '0100001010000110                ', mandatory: "mand.", multiple: "-    ", range: "-         ", default: "1                             ", type: "u", webm: "*", v1: "*", v2: "*", v3: "*", v4: "*", description: "The version of EBML parser used to create the file.", }),
     '0100001011110111                ': new MatroskaId({ name: 'EBMLReadVersion            ', level: "1 ", id: '0100001011110111                ', mandatory: "mand.", multiple: "-    ", range: "-         ", default: "1                             ", type: "u", webm: "*", v1: "*", v2: "*", v3: "*", v4: "*", description: "The minimum EBML version a parser has to support to read this file.", }),
