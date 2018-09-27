@@ -1,11 +1,11 @@
+import EBMLement from './element'
+
 export default class MatroskaElement extends EBMLement {
-    constructor() {
-        this.id = props.id
-        this.size = props.size
-        this.reader = props.reader
-
-        this.data = this.dRead(EBMLement.convertVIntStr(this.size))
+    constructor(reader) {
+        this.reader = reader
+        
+        this.id = this.reader.vRead()
+        this.size = this.reader.vRead()
+        this.data = null /* The magic... */
     }
-
-    mRead(byteCount) { }
 }

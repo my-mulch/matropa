@@ -1,3 +1,5 @@
+import EBMLement from './element'
+
 export default class EBMLReader {
     constructor(props) {
         this.elements = []
@@ -5,23 +7,21 @@ export default class EBMLReader {
         this.specs = props.specs
         this.document = props.document
 
-        this.reader = props.byteReader
-        this.reader.load(this.document)
+        this.byteReader = props.byteReader
+        this.byteReader.load(this.document)
     }
 
-    read() { /* Abtract */ }
+    parse() {
+        while (!this.byteReader.isEmpty())
+            this.elements.push(new EBMLement(this))
+    }
 
     vRead() {
-        byteReader.read()
+        return this.byteReader.queue(8 - this.byteReader.peek().length).slurp()
+    }
 
-        let field = rawByte.toString(2)
-        let bytesLeft = 8 - field.length
-
-        field = field.padStart(8, '0')
-        while (bytesLeft--)
-            field += byteReader.read().toString(2).padStart(8, '0')
-
-        return field
+    dRead(byteCount) {
+        return this.byteReader.queue(byteCount).slurp()
     }
 
 }

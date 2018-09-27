@@ -1,17 +1,14 @@
 export default class EBMLement {
-    constructor(props) {
-        this.id = props.id
-        this.size = props.size
-        this.reader = props.reader
+    constructor(reader) {
+        this.reader = reader
         
-        this.data = this.dRead(EBMLement.convertVIntStr(this.size))
+        this.id = this.reader.vRead()
+        this.size = this.reader.vRead()
+        this.data = this.reader.dRead(EBMLement.convertVIntStr(this.size))
     }
 
     static convertVIntStr(vIntStr) {
         return Number.parseInt(vIntStr.slice(vIntStr.length / 8), 2)
     }
-
-    dRead(byteCount) {
-        return this.reader.queue(byteCount).slurp()
-    }
+    
 }
