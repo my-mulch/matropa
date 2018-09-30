@@ -1,14 +1,14 @@
 import EBMLement from './element'
+import ByteReader from 'biteme'
 
 export default class EBMLReader {
     constructor(props) {
         this.elements = []
 
+        this.file = props.file
         this.specs = props.specs
-        this.document = props.document
 
-        this.byteReader = props.byteReader
-        this.byteReader.load(this.document)
+        this.byteReader = new ByteReader({ file: props.file })
     }
 
     parse() {
@@ -17,7 +17,7 @@ export default class EBMLReader {
     }
 
     vRead() {
-        return this.byteReader.queue(8 - this.byteReader.peek().length).slurp()
+        return this.byteReader.read({ chunkSize: 8 - Integer(this.byteReader.peek()) }.length).slurp()
     }
 
     dRead(byteCount) {

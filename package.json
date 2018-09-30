@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/trumanpurnell/matropa/issues"
   },
-  "homepage": "https://github.com/trumanpurnell/matropa#readme"
+  "homepage": "https://github.com/trumanpurnell/matropa#readme",
+  "dependencies": {
+    "biteme": "^1.0.0"
+  }
 }
