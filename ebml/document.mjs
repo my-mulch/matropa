@@ -16,6 +16,8 @@ export default class EBMLDocument extends ByteReader {
     }
 
     read(byteCount) {
+        if (byteCount < 0) return [this.head, 'N/A']
+
         return [
             this.head,
             this.head += byteCount || this.specs.vint(this.peek())
