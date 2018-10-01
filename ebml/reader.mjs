@@ -1,7 +1,7 @@
 import EBMLement from './element'
 import ByteReader from 'biteme'
 
-export default class EBMLReader {
+export default class EBMLDocument {
     constructor(props) {
         this.elements = []
 
@@ -15,13 +15,4 @@ export default class EBMLReader {
         while (!this.byteReader.isEmpty())
             this.elements.push(new EBMLement(this))
     }
-
-    vRead() {
-        return this.byteReader.read({ chunkSize: 8 - Integer(this.byteReader.peek()) }.length).slurp()
-    }
-
-    dRead(byteCount) {
-        return this.byteReader.queue(byteCount).slurp()
-    }
-
 }

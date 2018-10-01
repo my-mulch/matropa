@@ -12,4 +12,15 @@ export default class EBMLement {
         return Number.parseInt(vIntStr.slice(vIntStr.length / 8), 2)
     }
 
+    vRead() {
+        const length = ByteReader.leadingZeros(this.byteReader.peek())
+        this.byteReader.skip(length)
+
+        return new EBMLVint()
+    }
+
+    dRead(byteCount) {
+        return this.byteReader.queue(byteCount).slurp()
+    }
+
 }
