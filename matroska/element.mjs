@@ -1,29 +1,40 @@
-import EBMLement from './element'
-import EBMLint from '../ebml/vint';
+import EBMLement from '../ebml/element'
+import EBMLint from '../ebml/vint'
+import ByteReader from 'biteme'
+
+import util from 'util'
 
 export default class MatroskaElement extends EBMLement {
     constructor(doc) {
-        this.doc = doc
+        super(doc)
 
-        this.id = this.doc.lookup(this.scan().eval())
-        this.size = this.scan().eval()
+        this.id = this.doc.specs.lookup(this.scan().eval(this.doc, 0))
+        this.size = this.scan().eval(this.doc, 1)
         this.data = this.scan(this.size)
-
-        this.children = []
     }
 
-    scan(bytesLeft) {
+    scan(byteCount) {
+        this.doc.setMarker(byteCount)
 
         if (this.id && this.size && this.id.isMaster()) {
-            while (!this.pastMarker())
-                this.children.push(new EBMLement())
+            while (!this.doc.pastMarker())
+                this.children.push(new MatroskaElement(this.doc))
 
+            this.doc.popMarker()
             return this.children
         }
 
         return new EBMLint({
             top: this.doc.head,
-            bot: this.doc.head += bytesLeft || ByteReader.leadingZeros(this.doc.peek()),
+            bot: this.doc.head = this.doc.popMarker() || (this.doc.head + ByteReader.leadingZeros(this.doc.peek()) + 1)
         })
     }
+
+    toString() {
+        return `id: ${this.id}\nsize: ${this.size}\ndata: ${this.data}\n`
+    }
+
+    [util.inspect.custom]() { return this.toString() }
+
+
 }

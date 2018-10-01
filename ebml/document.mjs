@@ -1,4 +1,4 @@
-import EBMLement from './element'
+
 import ByteReader from 'biteme'
 
 export default class EBMLDocument extends ByteReader {
@@ -10,9 +10,12 @@ export default class EBMLDocument extends ByteReader {
     }
 
     parse() {
-        while (!this.isEmpty())
+        while (!this.isEmpty()){
             this.elements.push(new this.specs.element(this))
+            break
+        }
+
+        return this.elements
     }
 
-    lookup(id) { return this.specs.getId(id) }
 }
