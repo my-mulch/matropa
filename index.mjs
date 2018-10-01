@@ -11,6 +11,6 @@ const bytes = ConversionUtils
     .match(/.{1,8}/g)
     .map(function (byte) { return Number.parseInt(byte, 2) })
 
-const ebml = new EBMLDocument({ specs: MatroskaSpecs, bytes: bytes }).parse()
+const ebml = new EBMLDocument({ bytes }).parse()
 
 console.log(util.inspect(ebml, false, null, true /* enable colors */))

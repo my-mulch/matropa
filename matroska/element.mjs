@@ -8,8 +8,8 @@ export default class MatroskaElement extends EBMLement {
     constructor(doc) {
         super(doc)
 
-        this.id = this.doc.specs.lookup(this.scan().eval(this.doc, 0))
-        this.size = this.scan().eval(this.doc, 1)
+        this.id = this.scan()
+        this.size = this.scan()
         this.data = this.scan(this.size)
     }
 
@@ -30,11 +30,6 @@ export default class MatroskaElement extends EBMLement {
         })
     }
 
-    toString() {
-        return { id: this.id, size: this.size, data: this.data }
-    }
-
+    toString() { return { id: this.id, size: this.size, data: this.data } }
     [util.inspect.custom]() { return this.toString() }
-
-
 }
