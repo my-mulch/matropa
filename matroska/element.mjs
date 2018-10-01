@@ -31,7 +31,7 @@ export default class MatroskaElement extends EBMLement {
     }
 
     toString() {
-        return `id: ${this.id}\nsize: ${this.size}\ndata: ${this.data}\n`
+        return { id: this.id, size: this.size, data: this.data }
     }
 
     [util.inspect.custom]() { return this.toString() }
