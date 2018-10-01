@@ -1,14 +1,10 @@
 import EBMLement from './element'
 import ByteReader from 'biteme'
 
-export default class EBMLDocument {
+export default class EBMLDocument extends ByteReader {
     constructor(props) {
+        super(props)
         this.elements = []
-
-        this.file = props.file
-        this.specs = props.specs
-
-        this.byteReader = new ByteReader({ file: props.file })
     }
 
     parse() {
