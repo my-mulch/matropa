@@ -3,7 +3,7 @@ import util from 'util'
 export default class MatroskaId {
     constructor(props) {
         this.id = props.id
-        
+
         this.name = props.name
         this.level = props.level
         this.type = props.type
