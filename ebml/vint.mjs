@@ -1,7 +1,14 @@
-export default class EBMLVint {
+export default class EBMLint {
     constructor(props) {
-        this.start = props.start,
-        this.end = props.end
-        this.type = props.type
+        this.top = props.top
+        this.bot = props.end
+    }
+
+    eval(doc) {
+        return this.doc.bytes
+            .slice(this.top, this.bot)
+            .reduce(function (result, byte) {
+                return result || byte
+            }, 0)
     }
 }

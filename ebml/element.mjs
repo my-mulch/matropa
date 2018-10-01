@@ -1,24 +1,19 @@
-import EBMLVint from "./vint";
+import EBMLint from "./vint";
+import ByteReader from 'biteme'
 
 export default class EBMLement {
     constructor(doc) {
         this.doc = doc
 
-        this.id = this.scan().eval()
+        this.id = this.doc.specs.lookup(this.scan().eval())
         this.size = this.scan().eval()
-        this.data = this.scan()
+        this.data = this.scan(this.size)
     }
 
-    static convertVIntStr(vIntStr) {
-        return Number.parseInt(vIntStr.slice(vIntStr.length / 8), 2)
-    }
-
-    scan(byteCount) {
-        byteCount = byteCount || this.doc.byteReader.getCountLeadZero(this.doc.peek())
-
-        return new EBMLVint({
-            start: this.byteReader.head,
-            end: this.byteReader.skip(byteCount),
+    scan(bytesLeft) {
+        return new EBMLint({
+            top: this.doc.head,
+            bot: this.doc.head += bytesLeft || ByteReader.leadingZeros(this.doc.peek()),
         })
     }
 
