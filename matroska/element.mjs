@@ -1,6 +1,4 @@
 import EBMLement from '../ebml/element'
-import EBMLint from '../ebml/vint'
-import ByteReader from 'biteme'
 
 import util from 'util'
 
@@ -24,10 +22,10 @@ export default class MatroskaElement extends EBMLement {
             return this.children
         }
 
-        return new EBMLint({
-            top: this.doc.head,
-            bot: this.doc.head = this.doc.popMarker() || (this.doc.head + ByteReader.leadingZeros(this.doc.peek()) + 1)
-        })
+        // return new EBMLint({
+        //     top: this.doc.head,
+        //     bot: this.doc.head = this.doc.popMarker() || (this.doc.head + ByteReader.leadingZeros(this.doc.peek()) + 1)
+        // })
     }
 
     toString() { return { id: this.id, size: this.size, data: this.data } }
