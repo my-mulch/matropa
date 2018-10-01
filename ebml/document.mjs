@@ -1,7 +1,6 @@
 
 import ByteReader from 'biteme'
 import EBMLSpecs from './specs'
-
 import util from 'util'
 
 export default class EBMLDocument extends ByteReader {
