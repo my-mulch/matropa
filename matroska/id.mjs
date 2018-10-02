@@ -9,6 +9,7 @@ export default class MatroskaId {
         this.type = props.type
         this.webm = props.webm
 
+        this.description = props.description
         this.mandatory = props.mandatory
         this.multiple = props.multiple
         this.range = props.range
@@ -18,8 +19,6 @@ export default class MatroskaId {
         this.v2 = props.v2
         this.v3 = props.v3
         this.v4 = props.v4
-
-        this.description = props.description
     }
 
     isMaster() { return this.type === 'm' }

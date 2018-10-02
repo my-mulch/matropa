@@ -2,14 +2,14 @@ import EBMLement from "./element"
 import ByteReader from 'biteme'
 
 export default class EBMLSpecs {
-    static vint(byte) {
-        return 1 + ByteReader.leadingZeros(byte)
-    }
-
-    static interpret(element, type) {
+    static interpret(element, action) {
         return element.doc.bytes
             .slice(...element.doc.read(element.size))
-            .reduce(this[type], 0)
+            .reduce(this[action], 0)
+    }
+
+    static vint(byte) {
+        return 1 + ByteReader.leadingZeros(byte)
     }
 
     static vintfull(result, byte) {
@@ -22,7 +22,6 @@ export default class EBMLSpecs {
         return result << 8 | byte
     }
 
-    static datablob() { return }
 }
 
 EBMLSpecs.element = EBMLement

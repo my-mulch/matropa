@@ -5,6 +5,9 @@ import MatroskaSpecs from './matroska/specs'
 
 import fs from 'fs'
 
-const file = fs.readFileSync('/Users/tru/Desktop/buffer.mkv')
-const ebml = new EBMLDocument({ bytes: file })
+const ebml = new EBMLDocument({
+    specs: MatroskaSpecs,
+    bytes: fs.readFileSync('/Users/tru/Desktop/buffer.mkv'),
+})
+
 console.log(util.inspect(ebml, false, null, true /* enable colors */))

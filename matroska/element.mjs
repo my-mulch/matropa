@@ -6,26 +6,8 @@ export default class MatroskaElement extends EBMLement {
     constructor(doc) {
         super(doc)
 
-        this.id = this.scan()
-        this.size = this.scan()
-        this.data = this.scan(this.size)
-    }
-
-    scan(byteCount) {
-        this.doc.setMarker(byteCount)
-
-        if (this.id && this.size && this.id.isMaster()) {
-            while (!this.doc.pastMarker())
-                this.children.push(new MatroskaElement(this.doc))
-
-            this.doc.popMarker()
-            return this.children
-        }
-
-        // return new EBMLint({
-        //     top: this.doc.head,
-        //     bot: this.doc.head = this.doc.popMarker() || (this.doc.head + ByteReader.leadingZeros(this.doc.peek()) + 1)
-        // })
+        this.id = this.doc.specs.interpret(this, 'id')
+        this.data = this.doc.specs.interpret(this, this.tags.type)
     }
 
     toString() { return { id: this.id, size: this.size, data: this.data } }
