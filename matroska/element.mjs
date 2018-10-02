@@ -6,8 +6,10 @@ export default class MatroskaElement extends EBMLement {
     constructor(doc) {
         super(doc)
 
-        this.id = this.doc.specs.interpret(this, 'id')
-        this.data = this.doc.specs.interpret(this, this.tags.type)
+        this.id = this.doc.specs.id(this)
+
+        if (this.id.type === 'm' || this.id.type === 's' || this.id.type === 'u' || this.id.type === 'e')
+            this.data = this.doc.specs[this.id.type](this)
     }
 
     toString() { return { id: this.id, size: this.size, data: this.data } }

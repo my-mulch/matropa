@@ -4,8 +4,8 @@ export default class EBMLement {
     constructor(doc) {
         this.doc = doc
 
-        this.tags = this.doc.specs.interpret(this, 'vintfull')
-        this.size = this.doc.specs.interpret(this, 'vintrmlz')
+        this.id = this.doc.specs.interpret({ element: this, action: 'vintfull' })
+        this.size = this.doc.specs.interpret({ element: this, action: 'vintrmlz' })
         this.data = this.doc.read(this.size)
     }
 

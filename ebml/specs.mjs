@@ -2,10 +2,21 @@ import EBMLement from "./element"
 import ByteReader from 'biteme'
 
 export default class EBMLSpecs {
-    static interpret(element, action) {
-        return element.doc.bytes
-            .slice(...element.doc.read(element.size))
-            .reduce(this[action], 0)
+    static interpret(event) {
+        let { element, action, range, base } = event
+
+        if (!range)
+            range = element.doc.read(element.size)
+
+        if (typeof action === 'string')
+            action = this[action]
+
+        if (base === undefined)
+            base = 0
+
+        return Array
+            .from(element.doc.bytes.slice(...range))
+            .reduce(action, base)
     }
 
     static vint(byte) {

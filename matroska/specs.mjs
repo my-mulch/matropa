@@ -3,14 +3,9 @@ import MatroskaElement from './element'
 import EBMLSpecs from '../ebml/specs'
 
 export default class MatroskaSpecs extends EBMLSpecs {
-
-    static interpret() { }
-
-    // to maintain this pretty table
-    static id(id) { return this.ids[id.toString(2).padStart(32, '0')] }
-
     /*
         interpretations:
+            id
             master
             string
             float
@@ -21,23 +16,49 @@ export default class MatroskaSpecs extends EBMLSpecs {
             signed
     */
 
-    static m(element, type) {
-        const children = []
-        const end = element.doc.head
+    static id(element) {
+        return this.ids[element.id.toString(2).padStart(32, '0')]
+    }
 
-        element.doc.head -= element.size
-        while (element.doc.head < end)
+    static m(element) {
+        const children = []
+
+        const end = element.size < 0 ? Number.POSITIVE_INFINITY : element.doc.head
+        element.doc.head -= element.size < 0 ? 0 : element.size
+
+        while (element.doc.head < end && !element.doc.isEmpty())
             children.push(new MatroskaElement(element.doc))
 
         return children
     }
 
-    static s() { }
+    static s(element) {
+        return this.interpret({
+            element,
+            range: element.data,
+            base: '',
+            action: function (string, byte) { return string + String.fromCharCode(byte) },
+        })
+    }
+
     static f() { }
     static b() { }
     static d() { }
-    static e() { }
-    static u() { }
+    static e(element) {
+        return this.interpret({
+            element,
+            range: element.data,
+            base: '',
+            action: function (string, byte) { return string + String.fromCharCode(byte) },
+        })
+    }
+    static u(element) {
+        return this.interpret({
+            element,
+            action: 'vintfull',
+            range: element.data
+        })
+    }
     static i() { }
 }
 
