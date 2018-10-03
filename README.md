@@ -9,6 +9,8 @@ const ebml = new EBMLDocument({
     specs: MatroskaSpecs
 })
 
-console.log(ebml)
+// All values made availiable
+console.log(ebml.PixelWidth.data)
+console.log(ebml.PixelHeight.data)
 
 ```
