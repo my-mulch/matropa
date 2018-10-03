@@ -32,9 +32,9 @@ export default class MatroskaSpecs extends EBMLSpecs {
             .reduce(element.doc.constructor.utils.toString, '')
     }
 
-    static f(element) { return 'floats' }
-    static b(element) { return 'binary' }
-    static d(element) { return 'datess' }
+    static f(element) { return element.data }
+    static b(element) { return element.data }
+    static d(element) { return element.data }
 
     static e(element) {
         return this.s(element)
@@ -46,7 +46,7 @@ export default class MatroskaSpecs extends EBMLSpecs {
             .reduce(this.vintfull, 0)
     }
 
-    static i(element) { return 'signed' }
+    static i(element) { return element.data }
 }
 
 MatroskaSpecs.element = MatroskaElement

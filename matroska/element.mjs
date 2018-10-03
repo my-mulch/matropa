@@ -5,7 +5,7 @@ export default class MatroskaElement extends EBMLement {
     constructor(doc) {
         super(doc)
 
-        this.id = this.doc.specs.id(this.head)
+        this.id = this.doc.specs.id(this.rawi)
         this.data = this.doc.specs[this.id.type](this)
 
         // Expose keys
