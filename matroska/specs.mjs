@@ -17,16 +17,35 @@ export default class MatroskaSpecs extends EBMLSpecs {
 
     static id(id) { return this.ids[id.toString(2).padStart(32, '0')] }
 
-    static m(element) {
+    static m(element, children = []) {
+        element.doc.head = element.data[0]
 
+        while (element.doc.head < element.data[1])
+            children.push(new MatroskaElement(element.doc))
+
+        return children
     }
-    
-    static s(element) { return element.data }
+
+    static s(element) {
+        return element.doc
+            .extract(element.data)
+            .reduce(element.doc.constructor.utils.toString, '')
+    }
+
     static f(element) { return 'floats' }
     static b(element) { return 'binary' }
     static d(element) { return 'datess' }
-    static e(element) { return 'utf8ss' }
-    static u(element) { return 'unsign' }
+
+    static e(element) {
+        return this.s(element)
+    }
+
+    static u(element) {
+        return element.doc
+            .extract(element.data)
+            .reduce(this.vintfull, 0)
+    }
+
     static i(element) { return 'signed' }
 }
 

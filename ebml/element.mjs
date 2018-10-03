@@ -9,6 +9,8 @@ export default class EBMLement {
 
         if (this.size > 0)
             this.data = this.doc.advance(this.size)
+        else
+            this.data = [this.doc.head, this.doc.length]
     }
 
     vint() {
