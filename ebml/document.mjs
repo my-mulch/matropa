@@ -14,15 +14,6 @@ export default class EBMLDocument extends ByteReader {
             this.elements.push(new this.specs.element(this))
     }
 
-    read(byteCount) {
-        if (byteCount < 0) return [this.head, 'N/A']
-
-        return [
-            this.head,
-            this.head += byteCount || this.specs.vint(this.peek())
-        ]
-    }
-
     toString() { return this.elements }
     [util.inspect.custom]() { return this.toString() }
 }
