@@ -14,6 +14,11 @@ export default class EBMLDocument extends ByteReader {
             this.elements.push(new this.specs.element(this))
     }
 
-    toString() { return this.elements }
-    [util.inspect.custom]() { return this.toString() }
+    toString() {
+        return this.elements
+    }
+    
+    [util.inspect.custom]() {
+        return util.inspect(this.toString(), false, null, true /* enable colors */)
+    }
 }

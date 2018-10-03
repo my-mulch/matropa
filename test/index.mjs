@@ -1,5 +1,3 @@
-import util from 'util' // nodes
-
 import EBMLDocument from '../ebml/document'
 import MatroskaSpecs from '../matroska/specs'
 
@@ -10,4 +8,4 @@ const ebml = new EBMLDocument({
     specs: MatroskaSpecs
 })
 
-console.log(util.inspect(ebml, false, null, true /* enable colors */))
+console.log(ebml)
