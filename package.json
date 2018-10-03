@@ -1,6 +1,6 @@
 {
   "name": "matropa",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "A matroska parser",
   "main": "index.js",
   "scripts": {
