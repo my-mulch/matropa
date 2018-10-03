@@ -4,7 +4,7 @@ import EBMLDocument from './ebml/document'
 import MatroskaSpecs from './matroska/specs'
 
 export default {
-    parser: EBMLDocument,
+    EBMLDocument,
     specs: {
         matroska: MatroskaSpecs,
         ebml: EBMLSpecs
