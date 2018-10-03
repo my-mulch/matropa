@@ -7,6 +7,7 @@ export default class MatroskaElement extends EBMLement {
  
         this.id = this.doc.specs.id(this.head)
         this.data = this.doc.specs[this.id.type](this)
+        this.doc[this.id.name.trim()] = this
     }
 
     toString() { return { id: this.id, size: this.size, data: this.data } }
