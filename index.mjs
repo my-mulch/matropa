@@ -3,10 +3,6 @@ import EBMLSpecs from './ebml/specs'
 import EBMLDocument from './ebml/document'
 import MatroskaSpecs from './matroska/specs'
 
-export default {
-    EBMLDocument,
-    specs: {
-        matroska: MatroskaSpecs,
-        ebml: EBMLSpecs
-    }
-}
+export const EBMLDocument
+export const MatroskaSpecs
+export const EBMLSpecs
