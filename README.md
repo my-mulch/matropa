@@ -2,11 +2,11 @@
 
 ```js
 
-import { EBMLDocument, specs } from 'matropa'
+import { EBMLDocument, MatroskaSpecs, EBMLSpecs } from 'matropa'
 
 const ebml = new EBMLDocument({
     bytes: /* A Uint8Array */,
-    specs: specs.matroska
+    specs: MatroskaSpecs
 })
 
 console.log(ebml)
