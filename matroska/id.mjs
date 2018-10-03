@@ -21,9 +21,6 @@ export default class MatroskaId {
         this.v4 = props.v4
     }
 
-    isMaster() { return this.type === 'm' }
     toString() { return this.name.trim() }
-    getId() { return this.id.trim() }
-
     [util.inspect.custom]() { return this.toString() }
 }

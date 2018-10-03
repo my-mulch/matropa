@@ -18,6 +18,6 @@ export default class EBMLement {
         return this.doc.advance(leadSize)
     }
 
-    toString() { return { size: this.size, data: this.data } }
+    toString() { return { head: this.head, size: this.size, data: this.data } }
     [util.inspect.custom]() { return this.toString() }
 }
