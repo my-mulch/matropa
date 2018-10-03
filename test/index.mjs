@@ -1,7 +1,7 @@
 import util from 'util' // nodes
 
-import EBMLDocument from './ebml/document'
-import MatroskaSpecs from './matroska/specs'
+import EBMLDocument from '../ebml/document'
+import MatroskaSpecs from '../matroska/specs'
 
 import fs from 'fs'
 
