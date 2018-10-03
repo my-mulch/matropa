@@ -1,13 +1,12 @@
-import util from 'util' // nodes
 
+import EBMLSpecs from './ebml/specs'
 import EBMLDocument from './ebml/document'
 import MatroskaSpecs from './matroska/specs'
 
-import fs from 'fs'
-
-const ebml = new EBMLDocument({
-    bytes: fs.readFileSync('/Users/tru/Desktop/buffer.mkv'),
-    specs: MatroskaSpecs
-})
-
-console.log(util.inspect(ebml, false, null, true /* enable colors */))
+export default {
+    parser: EBMLDocument,
+    specs: {
+        matroska: MatroskaSpecs,
+        ebml: EBMLSpecs
+    }
+}
