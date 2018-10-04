@@ -10,7 +10,7 @@ const ebml = new EBMLDocument({
 })
 
 // All values made availiable
-console.log(ebml.PixelWidth.data)
-console.log(ebml.PixelHeight.data)
+console.log(ebml.PixelWidth)
+console.log(ebml.PixelHeight)
 
 ```
