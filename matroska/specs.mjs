@@ -1,5 +1,6 @@
 import MatroskaIdList from './id-list'
 import MatroskaElement from './element'
+
 import EBMLSpecs from '../ebml/specs'
 
 export default class MatroskaSpecs extends EBMLSpecs {
@@ -13,12 +14,13 @@ export default class MatroskaSpecs extends EBMLSpecs {
             UTF-8
             unsigned
             signed
+            junk
     */
 
     static m(element, children = []) {
-        element.doc.head = element.data[0]
+        element.doc.head = element.range[0]
 
-        while (element.doc.head < element.data[1])
+        while (element.doc.head < element.range[1])
             children.push(new MatroskaElement(element.doc))
 
         return children
@@ -26,13 +28,13 @@ export default class MatroskaSpecs extends EBMLSpecs {
 
     static s(element) {
         return element.doc
-            .extract(element.data)
+            .extract(element.range)
             .reduce(element.doc.constructor.utils.toString, '')
     }
 
-    static f(element) { return element.data }
-    static b(element) { return element.data }
-    static d(element) { return element.data }
+    static f(element) { return element.range }
+    static b(element) { return element.range }
+    static d(element) { return element.range }
 
     static e(element) {
         return this.s(element)
@@ -40,21 +42,21 @@ export default class MatroskaSpecs extends EBMLSpecs {
 
     static u(element) {
         return element.doc
-            .extract(element.data)
+            .extract(element.range)
             .reduce(this.vintfull, 0)
     }
 
-    static i(element) { return element.data }
-
-    static id(id) {
-        return this.ids[id] ? this.ids[id] : this.ids["00000000000000000000000011101100"] // voidId
-    }
-
-    static [undefined]() {
-        console.log('searching...')
+    static i(element) { return element.range }
+    static j(element) {
+        element.doc.head = element.range[0]
+        
+        while (true)
+            for (let i = 0, byte = 0; i < this.MAX_ID_LEN; i++)
+                if (this.ids[byte = byte << 8 | element.doc.read()])
+                    return element.doc.rewind(i)
     }
 }
 
-MatroskaSpecs.element = MatroskaElement
 MatroskaSpecs.ids = MatroskaIdList
+MatroskaSpecs.element = MatroskaElement
 

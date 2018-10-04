@@ -14,3 +14,4 @@ export default class EBMLSpecs {
 }
 
 EBMLSpecs.element = EBMLement
+EBMLSpecs.MAX_ID_LEN = 4

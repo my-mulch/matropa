@@ -24,6 +24,6 @@
   },
   "homepage": "https://github.com/trumanpurnell/matropa#readme",
   "dependencies": {
-    "biteme": "^3.2.1"
+    "biteme": "^4.0.0"
   }
 }
