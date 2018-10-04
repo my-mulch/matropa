@@ -7,7 +7,7 @@ export default class EBMLement {
         this.rawi = this.doc.extract(this.vint()).reduce(this.doc.specs.vintfull, 0)
         this.size = this.doc.extract(this.vint()).reduce(this.doc.specs.vintrmlz, 0)
 
-        if (this.size > 0)
+        if (this.size >= 0)
             this.data = this.doc.advance(this.size)
         else
             this.data = [this.doc.head, this.doc.length]

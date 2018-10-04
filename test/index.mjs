@@ -4,8 +4,8 @@ import MatroskaSpecs from '../matroska/specs'
 import fs from 'fs'
 
 const ebml = new EBMLDocument({
-    bytes: fs.readFileSync('/Users/tru/Desktop/buffer.mkv'),
+    bytes: fs.readFileSync('/Users/tru/Downloads/matroska_test_w1_1/test7.mkv'),
     specs: MatroskaSpecs
 })
 
-console.log(ebml)
+console.log(Object.keys(ebml))

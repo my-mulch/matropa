@@ -15,8 +15,6 @@ export default class MatroskaSpecs extends EBMLSpecs {
             signed
     */
 
-    static id(id) { return this.ids[id.toString(2).padStart(32, '0')] }
-
     static m(element, children = []) {
         element.doc.head = element.data[0]
 
@@ -47,7 +45,16 @@ export default class MatroskaSpecs extends EBMLSpecs {
     }
 
     static i(element) { return element.data }
+
+    static id(id) {
+        return this.ids[id] ? this.ids[id] : this.ids["00000000000000000000000011101100"] // voidId
+    }
+
+    static [undefined]() {
+        console.log('searching...')
+    }
 }
 
 MatroskaSpecs.element = MatroskaElement
 MatroskaSpecs.ids = MatroskaIdList
+

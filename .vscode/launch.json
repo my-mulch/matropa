@@ -5,7 +5,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/index.mjs",
+            "program": "${workspaceFolder}/test/index.mjs",
             "runtimeArgs": [
                 "--experimental-modules"
             ]
