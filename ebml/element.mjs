@@ -28,7 +28,7 @@ export default class EBMLement {
             .reduce(this.doc.specs.vintrmlz, 0)
 
         // Compute data offset and seek past it
-        this.offsets.data = this.offsets.size + (this.size > 0 ? this.size : 0)
+        this.offsets.data = this.offsets.size + (this.size >= 0 ? this.size : this.doc.length - this.doc.head)
         this.doc.seek(this.base + this.offsets.data)
     }
 
