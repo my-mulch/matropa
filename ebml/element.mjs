@@ -6,16 +6,30 @@ export default class EBMLement {
 
         this.base = this.doc.head
 
+        // Offsets indicate where a section ENDS relative to the base
         this.offsets = {}
+
+        // Compute id offset and seek past it
         this.offsets.id = this.vint()
+        this.doc.seek(this.base + this.offsets.id)
+
+        // Compute size offset and seek past it
         this.offsets.size = this.offsets.id + this.vint()
+        this.doc.seek(this.base + this.offsets.size)
 
-        this.id0b = this.doc.extract(this.doc.head, this.offsets.id).reduce(this.doc.specs.vintfull, 0)
-        this.size = this.doc.extract(this.offsets.id, this.offsets.size).reduce(this.doc.specs.vintrmlz, 0)
+        // Extract rawId from offsets
+        this.rawId = this.doc
+            .extract(this.base, this.base + this.offsets.id)
+            .reduce(this.doc.specs.vintfull, 0)
 
-        this.offsets.data = this.offsets.size + this.size > 0 ? this.size : 0
+        // Extract size from offsets
+        this.size = this.doc
+            .extract(this.base + this.offsets.id, this.base + this.offsets.size)
+            .reduce(this.doc.specs.vintrmlz, 0)
 
-        this.doc.advance(this.offsets.id + this.offsets.size + this.offsets.data)
+        // Compute data offset and seek past it
+        this.offsets.data = this.offsets.size + (this.size > 0 ? this.size : 0)
+        this.doc.seek(this.base + this.offsets.data)
     }
 
     vint() {

@@ -18,9 +18,9 @@ export default class MatroskaSpecs extends EBMLSpecs {
     */
 
     static m(element, children = []) {
-        element.doc.head = element.range[0]
+        element.doc.head = element.base + element.offsets.size
 
-        while (element.doc.head < element.range[1])
+        while (element.doc.head < element.base + element.offsets.data)
             children.push(new MatroskaElement(element.doc))
 
         return children
@@ -28,13 +28,14 @@ export default class MatroskaSpecs extends EBMLSpecs {
 
     static s(element) {
         return element.doc
-            .extract(element.range)
+            .extract(element.base + element.offsets.size,
+                element.base + element.offsets.data)
             .reduce(element.doc.constructor.utils.toString, '')
     }
 
-    static f(element) { return element.range }
-    static b(element) { return element.range }
-    static d(element) { return element.range }
+    static f(element) { return 'float' }
+    static b(element) { return 'binary' }
+    static d(element) { return 'date' }
 
     static e(element) {
         return this.s(element)
@@ -42,18 +43,21 @@ export default class MatroskaSpecs extends EBMLSpecs {
 
     static u(element) {
         return element.doc
-            .extract(element.range)
+            .extract(element.base + element.offsets.size,
+                element.base + element.offsets.data)
             .reduce(this.vintfull, 0)
     }
 
-    static i(element) { return element.range }
+    static i(element) { return 'signed' }
     static j(element) {
-        element.doc.head = element.range[0]
-        
-        while (true)
-            for (let i = 0, byte = 0; i < this.MAX_ID_LEN; i++)
-                if (this.ids[byte = byte << 8 | element.doc.read()])
-                    return element.doc.rewind(i)
+        element.doc.head = element.base + element.offsets.id
+
+        let byte = 0, i = 0
+        while (!this.ids[byte = byte << 8 | element.doc.read()])
+            if (++i % this.MAX_ID_LEN === 0) byte = 0
+
+        element.doc.rewind(byte.toString(16).length / 2)
+        element.offsets = null
     }
 }
 
